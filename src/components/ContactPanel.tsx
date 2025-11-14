@@ -6,7 +6,6 @@ const CONTACT_LINKS = [
   { label: "Phone", value: profile.contact.phone, href: `tel:${profile.contact.phone.replace(/\s+/g, "")}` },
   { label: "LinkedIn", value: profile.contact.linkedin, href: profile.contact.linkedin },
   { label: "GitHub", value: profile.contact.github, href: profile.contact.github },
-  profile.contact.portfolio && { label: "Portfolio", value: profile.contact.portfolio, href: profile.contact.portfolio },
   { label: "3D Experience", value: profile.contact.portfolio3d, href: profile.contact.portfolio3d },
 ].filter(
   (link): link is { label: string; value: string; href: string } =>
