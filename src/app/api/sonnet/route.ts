@@ -34,11 +34,11 @@ Core stats: ${profile.stats.map((stat) => `${stat.label}: ${stat.value}`).join("
       .join("\n");
 
     const payload = {
-      model: "claude-sonnet-4-5-20250929",
-      max_tokens: 800,
-      temperature: 0.4,
+      model: "claude-3-5-haiku-20241022",
+      max_tokens: 500,
+      temperature: 0.3,
       system:
-        "You are Sonnet 4.5, a strategic AI guide that narrates Saswata Saha's impact for US-based engineering leaders. Speak with confident, concise, outcomes-first language.",
+        "You are a concise AI concierge narrating Saswata Saha's impact for US-based engineering leaders. Respond in fast, executive-ready bullets with clear actions.",
       messages: [
         ...history.map((message: Message) => ({
           role: message.role,
