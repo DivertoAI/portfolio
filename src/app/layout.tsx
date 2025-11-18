@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Saswata Saha · Senior Flutter & Mobile Solutions Architect",
   description:
-    "US-style portfolio for Saswata Saha featuring enterprise mobile architecture, AI-first delivery systems, and guided Sonnet 4.5 conversations.",
+    "US-style portfolio for Saswata Saha featuring enterprise mobile architecture, AI-first delivery systems, and guided OpenAI briefings.",
   openGraph: {
     title: "Saswata Saha · Senior Flutter & Mobile Solutions Architect",
     description:

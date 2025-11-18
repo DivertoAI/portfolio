@@ -18,9 +18,9 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Missing prompt" }, { status: 400 });
     }
 
-    const apiKey = process.env.SONNET_API_KEY;
+    const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) {
-      return NextResponse.json({ error: "SONNET_API_KEY is not configured" }, { status: 500 });
+      return NextResponse.json({ error: "OPENAI_API_KEY is not configured" }, { status: 500 });
     }
 
     const summaryBlock = `Profile: ${profile.name} – ${profile.title} based in ${profile.location}.
@@ -34,50 +34,47 @@ Core stats: ${profile.stats.map((stat) => `${stat.label}: ${stat.value}`).join("
       .join("\n");
 
     const payload = {
-      model: "claude-3-5-haiku-20241022",
+      model: "gpt-4o-mini",
       max_tokens: 500,
       temperature: 0.3,
-      system:
-        "You are a concise AI concierge narrating Saswata Saha's impact for US-based engineering leaders. Respond in fast, executive-ready bullets with clear actions.",
       messages: [
+        {
+          role: "system",
+          content:
+            "You are a concise AI concierge narrating Saswata Saha's impact for US-based engineering leaders. Respond in fast, executive-ready bullets with clear actions.",
+        },
         ...history.map((message: Message) => ({
           role: message.role,
-          content: [{ type: "text" as const, text: message.content }],
+          content: message.content,
         })),
         {
           role: "user" as const,
-          content: [
-            {
-              type: "text" as const,
-              text: `${summaryBlock}\n\nExperience:\n${experienceBlock}\n\nViewer question: ${prompt}`,
-            },
-          ],
+          content: `${summaryBlock}\n\nExperience:\n${experienceBlock}\n\nViewer question: ${prompt}`,
         },
       ],
     };
 
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "x-api-key": apiKey,
-        "anthropic-version": "2023-06-01",
+        Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify(payload),
     });
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error("Sonnet error", errorText);
-      return NextResponse.json({ error: "Unable to reach Sonnet" }, { status: 500 });
+      console.error("OpenAI error", errorText);
+      return NextResponse.json({ error: "Unable to reach OpenAI" }, { status: 500 });
     }
 
     const data = await response.json();
-    const reply = data?.content?.[0]?.text || "No response";
+    const reply = data?.choices?.[0]?.message?.content || "No response";
 
     return NextResponse.json({ reply });
   } catch (error) {
-    console.error("Sonnet route error", error);
+    console.error("OpenAI route error", error);
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }

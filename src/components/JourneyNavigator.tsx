@@ -19,8 +19,8 @@ export function JourneyNavigator() {
       <p className="text-xs font-semibold uppercase tracking-[0.4em] text-slate-400">Guided flow</p>
       {/* <h2 className="mt-2 text-2xl font-semibold text-white">Follow the AI journey</h2>÷ */}
       <p className="mt-1 text-sm text-slate-400">
-        Each labeled step syncs with Sonnet prompts and the main canvas. Choose a step to jump directly to the
-        relevant section.
+        Each labeled step syncs with OpenAI prompts and the main canvas. Choose a step to jump directly to the relevant
+        section.
       </p>
       <div className="mt-5 space-y-3">
         {journeySteps.map((step) => {

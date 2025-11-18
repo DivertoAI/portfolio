@@ -19,7 +19,7 @@ export function TopNav() {
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.4em] text-sky-300">Saswata Saha</p>
           {/* <p className="text-lg font-semibold text-white">Follow the AI journey</p> */}
-          {/* <p className="text-sm text-slate-400">Tap a step to align the experience + Sonnet briefing.</p> */}
+          {/* <p className="text-sm text-slate-400">Tap a step to align the experience + OpenAI briefing.</p> */}
         </div>
         <div className="hidden flex-wrap gap-2 lg:flex">
           {journeySteps.map((step) => (
