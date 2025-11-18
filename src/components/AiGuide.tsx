@@ -108,7 +108,7 @@ export function AiGuide() {
         >
           <span>
             <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-sky-300">AI Concierge</p>
-            <p className="text-sm font-semibold text-white">Guided Portfolio Chat</p>
+            <p className="text-sm font-semibold text-white">Portfolio Chat</p>
           </span>
           <span className="text-xs text-slate-400">{open ? "−" : "+"}</span>
         </button>
