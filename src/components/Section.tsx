@@ -22,32 +22,32 @@ export function Section({
   return (
     <section
       id={id}
-      className="space-y-6 rounded-3xl border border-white/10 bg-white/80 p-8 shadow-[0_10px_50px_rgba(15,23,42,0.08)] backdrop-blur dark:bg-slate-900/80"
+      className="space-y-6 rounded-3xl border border-white/10 bg-gradient-to-br from-slate-950/85 via-slate-900/85 to-slate-900/70 p-8 shadow-[0_20px_70px_rgba(0,0,0,0.35)] backdrop-blur"
     >
       <header className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div>
           {step && (
-            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-sky-500">
+            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-amber-400">
               {step}
             </p>
           )}
           {eyebrow && (
-            <p className="text-sm font-semibold uppercase tracking-[0.25em] text-slate-500">
+            <p className="text-sm font-semibold uppercase tracking-[0.25em] text-slate-300">
               {eyebrow}
             </p>
           )}
-          <h2 className="text-2xl font-semibold text-slate-900 dark:text-white">
+          <h2 className="text-2xl font-semibold text-white">
             {title}
           </h2>
           {description && (
-            <p className="mt-2 text-base text-slate-600 dark:text-slate-300">
+            <p className="mt-2 text-base text-slate-300">
               {description}
             </p>
           )}
         </div>
         {action}
       </header>
-      <div className="text-slate-700 dark:text-slate-200">{children}</div>
+      <div className="text-slate-200">{children}</div>
     </section>
   );
 }

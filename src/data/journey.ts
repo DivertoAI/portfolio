@@ -10,42 +10,42 @@ export type JourneyStep = {
 export const journeySteps: JourneyStep[] = [
   {
     id: "mission-control",
-    step: "STEP 01",
-    title: "Mission Control",
-    subtitle: "Executive summary + metrics",
+    step: "PAIN AUDIT",
+    title: "What keeps you up at night",
+    subtitle: "Exposing the weak spots before they sink releases",
     description:
-      "Understand Saswata's mission, core stats, and how to reach him for senior mobile/AI mandates.",
+      "Name the fears: parity gaps, store rejections, brittle AI experiments, and delivery you cannot defend to execs.",
     prompt:
-      "Brief a U.S. CTO on Saswata Saha's mission control: highlight his seniority, years of impact, crash-free stats, and how to get in touch immediately.",
+      "Explain the hiring-leader pain audit Saswata Saha runs: identify parity gaps, store/compliance risk, AI theater without ROI, and missing delivery discipline.",
   },
   {
     id: "architecture-systems",
-    step: "STEP 02",
-    title: "Architecture & Systems",
-    subtitle: "Value pillars + competency matrix",
+    step: "COUNTERMEASURES",
+    title: "Architecture that closes the gaps",
+    subtitle: "Defensive patterns + AI copilots you can trust",
     description:
-      "Walk through the architecture pillars, AI multi-agent design, and tools that make delivery predictable.",
+      "See the architecture pillars, guardrails, and AI-driven delivery systems built to shut down those fears.",
     prompt:
-      "Explain Saswata Saha's architecture playbook: pillars across enterprise mobile, AI-augmented delivery, and the specific state management & CI/CD capabilities he brings.",
+      "Detail Saswata Saha's countermeasures: enterprise mobile architecture, AI-augmented delivery, and the concrete CI/CD + state management capabilities he uses to make teams predictable.",
   },
   {
     id: "delivery-impact",
-    step: "STEP 03",
-    title: "Delivery Impact",
-    subtitle: "Experience timeline + proof",
+    step: "RECEIPTS",
+    title: "Proof it already works",
+    subtitle: "Enterprise launches, metrics, and recovery stories",
     description:
-      "Review enterprise programs, KPIs, and production highlights that de-risk exec decisions.",
+      "Walk through the timeline, KPIs, and live products that demonstrate the countermeasures in action.",
     prompt:
-      "Summarize Saswata Saha's enterprise delivery impact referencing Zuchiz, Chakra Cabs, Toya Club, and Labgex with concrete metrics and achievements.",
+      "Summarize Saswata Saha's delivery receipts referencing Zuchiz, Chakra Cabs, Toya Club, and Labgex with concrete metrics, recovery moves, and production reliability.",
   },
   {
     id: "engage-and-grow",
-    step: "STEP 04",
-    title: "Engage & Grow",
-    subtitle: "Education + community + contact",
+    step: "ENGAGE",
+    title: "How to move fast together",
+    subtitle: "Readiness, certifications, and booking",
     description:
-      "See how he keeps skills sharp, contributes to community, and where to engage next.",
+      "Confirm credentials, community signals, and the fastest route to lock in time.",
     prompt:
-      "Outline Saswata Saha's education, certifications, community engagement, and the fastest way for a hiring partner to engage him.",
+      "Outline Saswata Saha's readiness: education, certifications, community proof, and direct booking paths for hiring partners.",
   },
 ];
