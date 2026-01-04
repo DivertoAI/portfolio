@@ -9,13 +9,106 @@ interface GuideMessage {
   content: string;
 }
 
+const offlineIntro =
+  "Hi, I'm your concierge for Saswata. This GitHub Pages build runs offline, so I return curated highlights.";
+
+const statsLine = profile.stats.map((stat) => `${stat.label}: ${stat.value}`).join(" | ");
+const pillarHighlights = profile.pillars.map((pillar) => `- ${pillar.title}: ${pillar.points[0]}`);
+const experienceHighlights = profile.experiences
+  .slice(0, 3)
+  .map((experience) => `- ${experience.role} @ ${experience.company}: ${experience.impact}`);
+const certificationHighlights = profile.education.certifications.slice(0, 3).map((cert) => `- ${cert}`);
+
+const stepReplies: Record<string, string> = {
+  "mission-control": [
+    "Pain audit focus:",
+    "- Parity gaps between iOS and Android",
+    "- Store review and compliance risk",
+    "- AI pilots without ROI or governance",
+    "- Delivery visibility for execs",
+    `Summary: ${profile.summary}`,
+    `Core stats: ${statsLine}.`,
+  ].join("\n"),
+  "architecture-systems": [
+    "Architecture pillars:",
+    ...pillarHighlights,
+    `Toolbelt: ${profile.toolbelt.delivery.slice(0, 6).join(", ")}.`,
+  ].join("\n"),
+  "delivery-impact": [
+    "Recent delivery receipts:",
+    ...experienceHighlights,
+    `Featured launches: ${profile.featuredProjects.map((project) => project.name).join(", ")}.`,
+  ].join("\n"),
+  "engage-and-grow": [
+    `Education: ${profile.education.degree}, ${profile.education.institution}.`,
+    "Certifications:",
+    ...certificationHighlights,
+    `Contact: ${profile.contact.email}`,
+  ].join("\n"),
+};
+
+function buildOfflineReply({ prompt, stepId }: { prompt: string; stepId?: string }) {
+  const step = stepId ? journeySteps.find((item) => item.id === stepId) : undefined;
+  if (step) {
+    return [
+      `${step.step}: ${step.title}`,
+      stepReplies[step.id] ?? step.description,
+      `Contact: ${profile.contact.email}`,
+    ].join("\n");
+  }
+
+  const normalizedPrompt = prompt.trim().toLowerCase();
+  if (normalizedPrompt) {
+    if (normalizedPrompt.includes("resume") || normalizedPrompt.includes("cv")) {
+      return [
+        "Resume access:",
+        "Use the Resume PDF buttons on the page.",
+        `Contact: ${profile.contact.email}`,
+      ].join("\n");
+    }
+
+    if (normalizedPrompt.includes("email") || normalizedPrompt.includes("contact") || normalizedPrompt.includes("reach")) {
+      return [
+        "Contact details:",
+        `Email: ${profile.contact.email}`,
+        `LinkedIn: ${profile.contact.linkedin}`,
+        `GitHub: ${profile.contact.github}`,
+      ].join("\n");
+    }
+
+    if (normalizedPrompt.includes("project") || normalizedPrompt.includes("case")) {
+      return [
+        "Featured project highlights:",
+        ...profile.featuredProjects.map((project) => `- ${project.name}: ${project.description}`),
+        `Contact: ${profile.contact.email}`,
+      ].join("\n");
+    }
+
+    if (normalizedPrompt.includes("experience") || normalizedPrompt.includes("role")) {
+      return [
+        "Recent leadership roles:",
+        ...experienceHighlights,
+        `Contact: ${profile.contact.email}`,
+      ].join("\n");
+    }
+  }
+
+  return [
+    "Live AI is disabled in this static build.",
+    `${profile.name} - ${profile.title} (${profile.location}).`,
+    `Summary: ${profile.summary}`,
+    `Core stats: ${statsLine}.`,
+    "Tip: tap a step badge for a guided highlight.",
+    `Contact: ${profile.contact.email} | LinkedIn: ${profile.contact.linkedin}`,
+  ].join("\n");
+}
+
 export function AiGuide() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<GuideMessage[]>([
     {
       role: "assistant",
-      content:
-        "Hi, I'm your AI concierge for Saswata. Tap a step badge or ask any question and I'll narrate the relevant story.",
+      content: `${offlineIntro} Tap a step badge or ask any question.`,
     },
   ]);
   const [activeRequest, setActiveRequest] = useState<string | null>(null);
@@ -31,7 +124,7 @@ export function AiGuide() {
     }
   }, [messages, open]);
 
-  async function requestInsight({
+  function requestInsight({
     prompt,
     label,
     stepId,
@@ -45,22 +138,11 @@ export function AiGuide() {
     setError(null);
 
     try {
-      const response = await fetch("/api/sonnet", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt, history: messages }),
-      });
-
-      if (!response.ok) {
-        const errorBody = await response.json().catch(() => ({}));
-        throw new Error(errorBody.error || "Unable to reach AI guide");
-      }
-
-      const data = await response.json();
+      const reply = buildOfflineReply({ prompt, stepId });
       setMessages((prev) => [
         ...prev,
         { role: "user", content: label ?? prompt },
-        { role: "assistant", content: data.reply },
+        { role: "assistant", content: reply },
       ]);
 
       if (stepId) {
@@ -172,7 +254,8 @@ export function AiGuide() {
               </button>
             </form>
             <p className="mt-3 text-[10px] text-slate-500">
-              Context from {profile.name}. Customize flows in <code className="rounded bg-slate-800 px-1 py-0.5">src/data/journey.ts</code>.
+              Offline guide uses curated highlights. Customize flows in{" "}
+              <code className="rounded bg-slate-800 px-1 py-0.5">src/data/journey.ts</code>.
             </p>
           </>
         )}
